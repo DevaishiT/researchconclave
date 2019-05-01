@@ -8,16 +8,59 @@
    
    <head>
       <title>Allot reviewers</title>
+
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+        <link rel="stylesheet" href="../css/tablestyle.css">
+
+      <link rel="stylesheet" href="../css/bootstrap.css">
+      <link rel="stylesheet" href="../css/style.css" type="text/css" media="all" />
+      <link href="../css/font-awesome.css" rel="stylesheet">
+      <link href="//fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700" rel="stylesheet">
+
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
    </head>
    
+   <header class="py-sm-3 pt-3 pb-2" id="home">
+        <div class="container">
+            <div class="top d-md-flex text-center">
+               <h1> <a allign="center" href="../fconvener.php"><b>Research Conclave</b></a></h1>
+            </div>
+            <nav class="text-center">
+                <label for="drop" class="toggle"><span class="fa fa-bars"></span></label>
+                <input type="checkbox" id="drop" />
+                <ul class="menu">
+                    <li ><a href="../fconvener.php">Home</a></li>
+                    <li><a href="../post_notifications.php">Post Notifications</a></li>
+                    <li class="active">
+                        
+                        <label for="drop-2" class="toggle">Dropdown 
+                        </label>
+                        <a href="approve_reviewers.php">Approve reviewers</a>
+                        <input type="checkbox" id="drop-2" />
+                        <ul>
+                            <li><a href="approve_reviewers.php" class="drop-text">Poster Presentation</a></li>
+                            <li><a href="approve_reviewers_oral.php" class="drop-text">Oral Presentation</a></li>
+                        </ul>
+                     </li>
+
+                    <li><a href="view_grades.php">View Grades</a></li>
+                    <li><a href="../logout.php">Logout</a></li>
+                </ul>
+            </nav>
+           
+        </div>
+    </header> 
+
    <body>
-        <h1>Welcome <?php echo $login_session; ?> to the reviewer allotment page.</h1> 
-        <table>
+       
+        <div class="table-users">
+        <div class="header">Reviewer Approval</div>
+        <table cellspacing="0" style="text-align:center">
             <thead>
                 <tr>
+                <th>Serial</th>
                     <th>Username</th>
                     <th>Topic</th>
                     <th>Reviewer 1</th>
@@ -27,11 +70,12 @@
                     <th>Edit</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody >
                 <?php
                 while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
                 ?>
                     <tr id="<?php echo $row['username']; ?>">
+                    <td><?php echo $row['count']; ?></td>
                         <td data-target="username"><?php echo $row['username']; ?></td>
                         <td data-target="topic"><?php echo $row['topic']; ?></td>
                         <td data-target="reviewer1"><?php echo $row['reviewer1']; ?></td>
@@ -45,7 +89,7 @@
 
             </tbody>
         </table>
-
+                </div>
 
         <div id="myModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
@@ -53,7 +97,6 @@
             <!-- Modal content-->
             <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Edit Reviewers</h4>
             </div>
             <div class="modal-body">

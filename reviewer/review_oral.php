@@ -5,16 +5,56 @@
    
    <head>
       <title>Review and grade</title>
+
+      <script>
+         addEventListener("load", function() {
+               setTimeout(hideURLbar, 0);
+         }, false);
+
+         function hideURLbar() {
+               window.scrollTo(0, 1);
+         }
+      </script>
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+        <link rel="stylesheet" href="../css/tablestyle.css">
+
+      <link rel="stylesheet" href="../css/bootstrap.css">
+      <link rel="stylesheet" href="../css/style.css" type="text/css" media="all" />
+      <link href="../css/font-awesome.css" rel="stylesheet">
+      <link href="//fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700" rel="stylesheet">
+
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
    </head>
    
+
+   <header class="py-sm-3 pt-3 pb-2" id="home">
+        <div class="container">
+            <div class="top d-md-flex text-center">
+               <h1> <a allign="center" href="../reviewer.php">Research Conclave</a></h1>
+            </div>
+            <nav class="text-center">
+                <label for="drop" class="toggle"><span class="fa fa-bars"></span></label>
+                <input type="checkbox" id="drop" />
+                <ul class="menu">
+                    <li ><a href="../reviewer.php">Home</a></li>
+                    <li class="active"><a href="review_oral.php">Review Abstracts</a></li>
+                    <li><a href="../logout.php">Logout</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
    <body>
-      <h1>Welcome <?php echo $login_session; ?> to view grades page.</h1> 
-      <table>
+   <div class="table-users">
+        <div class="header">Poster Abstract</div>
+        <table cellspacing="0" style="text-align:center"> 
             <thead>
                 <tr>
+                <th>Serial</th>
                     <th>Username</th>
                     <th>Topic</th>
                     <th>Download</th>
@@ -46,6 +86,7 @@
                 while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
                 ?>
                      <tr id="<?php echo $row['username']; ?>">
+                     <td><?php echo $row['count']; ?></td>
                         <td data-target="username"><?php echo $row['username']; ?></td>
                         <td data-target="topic"><?php echo $row['topic']; ?></td>
                         <td data-target="file"><a href="<?php echo $row['fileename']; ?>">Click here!</a></td>
@@ -58,7 +99,7 @@
                 ?> 
             </tbody>
         </table>
-
+                </div>
         <div id="myModal" class="modal" role="dialog">
         <div class="modal-dialog">
 

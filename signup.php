@@ -54,10 +54,18 @@
 <html>
 <head>
     <title>signup</title>
+    <link href="css/loginstyle.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-    <form action="" method="POST">
-        <p>First Name:</label>
+
+    <div class="wrapper fadeInDown">
+        <div id="formContent">
+            <!-- Tabs Titles -->
+            <h2 class="inactive underlineHover"><a href="login.php"> Log In </a></h2>
+            <h2 class="active">Sign Up </h2>
+
+            <form action="" method="POST">
+        <!--<p>First Name:</label>
             <input type="text" id="firstname" name="firstname" />
         </p>
         <p>
@@ -78,7 +86,16 @@
         </p>
         <p>
             <input type="submit" value="SignUp" />
-        </p>
-    </form>
+        </p> -->
+            <input type="text" id="firstname" name="firstname" placeholder="First Name">
+            <input type="text" id="lastname" name="lastname" placeholder="Last Name"> 
+            <input type="text" id="username" name="username" placeholder="Username">
+            <input type="password" id="password" name="password" placeholder="Password">
+            <input type="password" id="password2" name="password2" placeholder="Re-enter Password">
+            <input type="submit" class="fadeIn third" value="SignUp">
+        </form>
+        </div>
+    </div>
+
 </body>
 </html>

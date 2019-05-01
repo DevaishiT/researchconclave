@@ -2,7 +2,7 @@
 
     include("config.php");
     session_start();
-
+    //echo "<link href='style.css' rel='stylesheet' type='text/css'>";
     if($_SERVER["REQUEST_METHOD"]=="POST")
     {
         $myusername = mysqli_real_escape_string($db,$_POST['username']);
@@ -37,7 +37,7 @@
             
          }else {
             $error = "Your Login Name or Password is invalid";
-            echo $error."<br>";
+            echo "<p class='errorMsg'>".$error."</p><br>";
          }
     }
 
@@ -47,23 +47,39 @@
 <html>
 <head>
     <title>login page</title>
+    <link href="css/loginstyle.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-    <form action="" method="POST">
-        <p>
-            <label>Username:</label>
-            <input type="text" id="username" name="username" />
-        </p>
-        <p>
-            <label>Password:</label>
-            <input type="password" id="password" name="password" />
-        </p>
-        <p>
-            <input type="submit" value="Login" />
-        </p>
-        <p>
-            <a href="signup.php">New Participant? Register here!</a>
-        </p>
-    </form>
+    
+    <div class="wrapper fadeInDown">
+        <div id="formContent">
+            <!-- Tabs Titles -->
+            <h2 class="active"> Log In </h2>
+            <h2 class="inactive underlineHover"><a href="signup.php">Sign Up </a></h2>
+            <form action="" method="POST">
+            <!--<p>
+                <label>Username:</label>
+                <input type="text" id="username" name="username" />
+            </p>
+            <p>
+                <label>Password:</label>
+                <input type="password" id="password" name="password" />
+            </p>
+            <p>
+                <input type="submit" value="Login" />
+            </p>
+            <p>
+                <a href="signup.php">New Participant? Register here!</a>
+            </p> -->
+            <input type="text" id="username" class="fadeIn first" name="username" placeholder="username">
+            <input type="password" id="password" class="fadeIn second" name="password" placeholder="password">
+            <input type="submit" class="fadeIn third" value="Log In">
+            </form> 
+
+            <div id="formFooter">
+                <a class="underlineHover" href="signup.php">New Participant? Register here!</a>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
