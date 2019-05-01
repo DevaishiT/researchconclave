@@ -50,7 +50,7 @@
         // if everything is ok, try to upload file
         } else {
             if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-                $sql = "INSERT into posterabstracts (username,email,topic,fileename) VALUES ('".$login_session."','".$email."','".$topic."','".$target_file."')";
+                $sql = "INSERT into posterabstracts (username,email,topic,fileename,reviewer1,reviewer2) VALUES ('".$login_session."','".$email."','".$topic."','".$target_file."','Not Alloted','Not Alloted')";
                 $result = mysqli_query($db,$sql);
                 $message = "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
             } else {

@@ -9,8 +9,6 @@
        $title = $_POST["title"];
        $description = $_POST["description"];
 
-       echo $title . $description;
-
        if($title != "" && $description != "")
        {
             $sql = "INSERT into notifications (username,postdate,title,postdescription) VALUES ('".$login_session."','".$today."','".$title."','".$description."')";
