@@ -9,8 +9,8 @@
    <head>
       <title>Allot reviewers</title>
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
    </head>
    
    <body>
@@ -22,7 +22,9 @@
                     <th>Topic</th>
                     <th>Reviewer 1</th>
                     <th>Reviewer 2</th>
-                    <th>Action</th>
+                    <th>Status</th>
+                    <th>Approve</th>
+                    <th>Edit</th>
                 </tr>
             </thead>
             <tbody>
@@ -34,7 +36,9 @@
                         <td data-target="topic"><?php echo $row['topic']; ?></td>
                         <td data-target="reviewer1"><?php echo $row['reviewer1']; ?></td>
                         <td data-target="reviewer2"><?php echo $row['reviewer2']; ?></td>
-                        <td><a href="#" data-role="update" data-id="<?php echo $row['username']; ?>">Assign</td>
+                        <td data-target="status"><?php echo $row['reviewapp']; ?></td>
+                        <td><a href="#" data-role="update" data-id="<?php echo $row['username']; ?>">Approve</td>
+                        <td><a href="#" data-role="edit" data-id="<?php echo $row['username']; ?>">Edit</td>
                     </tr>
                 <?php }
                 ?>
@@ -42,10 +46,7 @@
             </tbody>
         </table>
 
-        <!-- Trigger the modal with a button -->
-<!-- <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button> -->
 
-        <!-- Modal -->
         <div id="myModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
 
@@ -53,7 +54,7 @@
             <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Assign Reviewers</h4>
+                <h4 class="modal-title">Edit Reviewers</h4>
             </div>
             <div class="modal-body">
                 <div class="form-group">
@@ -62,15 +63,8 @@
                 <div class="form-group">
                     <input type="hidden" id="topic" class="form-control">
                 </div>
-                <!-- <div class="form-group">
-                    <label>Reviewer 1:</label>
-                    <input type="text" id="reviewer1" class="form-control">
-                </div>
                 <div class="form-group">
-                    <label>Reviewer 2:</label>
-                    <input type="text" id="reviewer2" class="form-control">
-                </div> -->
-                <div class="form-group">
+                <label>Reviewer 1:</label>
                 <select id="reviewer1" class="form-control">
                     <?php
                     $sql = "SELECT username,name from reviewer_type WHERE type = 'oral'";
@@ -84,6 +78,7 @@
                 </select>
                 </div>
                 <div class="form-group">
+                <label>Reviewer 2:</label>
                 <select id="reviewer2" class="form-control">
                 <?php
                     $sql = "SELECT username,name from reviewer_type WHERE type = 'oral'";
@@ -111,12 +106,50 @@
         $(document).ready(function(){
             $(document).on('click','a[data-role=update]',function(){
                 var id = $(this).data('id');
+                var username = $('#'+id).children('td[data-target=username]').text();
+                var topic = $('#'+id).children('td[data-target=topic]').text();
+                var reviewer1 = $('#'+id).children('td[data-target=reviewer1]').text();
+                var reviewer2 = $('#'+id).children('td[data-target=reviewer2]').text();
+                var status = $('#'+id).children('td[data-target=status]').text();
+                if(status == 'Approved')
+                {
+                    alert("Already approved");
+                }
+                else{
+                    $.ajax({
+                    url      : 'connection2.php',
+                    method   : 'post', 
+                    data     : {username : username , topic: topic , reviewer1 : reviewer1 , reviewer2: reviewer2},
+                    success  : function(response){
+                                alert('Approved Successfully');
+                                
+                                // alert(id);
+                                // now update user record in table 
+                                $('#'+id).children('td[data-target=username]').text(username);
+                                $('#'+id).children('td[data-target=topic]').text(topic);
+                                $('#'+id).children('td[data-target=reviewer1]').text(reviewer1);
+                                $('#'+id).children('td[data-target=reviewer2]').text(reviewer2);
+                                $('#'+id).children('td[data-target=status]').text('Approved');
+                                }
+                    });
+                }
+                
+                
+            });
+
+            $(document).on('click','a[data-role=edit]',function(){
+                
+                var id = $(this).data('id');
                 // alert(id);
                 var username = $('#'+id).children('td[data-target=username]').text();
                 var topic = $('#'+id).children('td[data-target=topic]').text();
                 var reviewer1 = $('#'+id).children('td[data-target=reviewer1]').text();
                 var reviewer2 = $('#'+id).children('td[data-target=reviewer2]').text();
-
+                var status = $('#'+id).children('td[data-target=status]').text();
+                if(status == 'Approved')
+                {
+                    alert('Caution: reviewers for this submission have alredy been approved.');
+                }
                 $('#username').val(username);
                 $('#topic').val(topic);
                 // $('#reviewer1').val(reviewer1);
@@ -137,7 +170,7 @@
                     method   : 'post', 
                     data     : {username : username , topic: topic , reviewer1 : reviewer1 , reviewer2: reviewer2},
                     success  : function(response){
-                                // alert('Success.');
+                                alert('Edited and Approved Successfully');
                                 
                                 // alert(id);
                                 // now update user record in table 
@@ -145,12 +178,14 @@
                                 $('#'+id).children('td[data-target=topic]').text(topic);
                                 $('#'+id).children('td[data-target=reviewer1]').text(reviewer1);
                                 $('#'+id).children('td[data-target=reviewer2]').text(reviewer2);
+                                $('#'+id).children('td[data-target=status]').text('Approved');
                                 $('#myModal').modal('toggle'); 
 
                                 }
                 });
             });
-        });
+            
+            });
 
         
    </script>
