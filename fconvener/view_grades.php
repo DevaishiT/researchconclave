@@ -28,12 +28,12 @@
                 while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
                 ?>
                     <tr id="<?php echo $row['username']; ?>">
-                        <td data-target="username"><?php echo $row['username']; ?></td>
-                        <td data-target="topic"><?php echo $row['topic']; ?></td>
-                        <td data-target="topic"><a href="<?php echo $row['fileename']; ?>">Click here!</a></td>
-                        <td data-target="reviewer1"><?php echo $row['reviewer1']; ?></td>
-                        <td data-target="reviewer2"><?php echo $row['reviewer2']; ?></td>
-                        <td data-target="grade"><?php echo ($row['grade1']+$row['grade2'])/2; ?></td>
+                        <td><?php echo $row['username']; ?></td>
+                        <td><?php echo $row['topic']; ?></td>
+                        <td><a href="<?php echo $row['fileename']; ?>">Click here!</a></td>
+                        <td><?php echo $row['reviewer1']; ?></td>
+                        <td><?php echo $row['reviewer2']; ?></td>
+                        <td><?php echo ($row['grade1']+$row['grade2'])/2; ?></td>
                     </tr>
                 <?php }
                 ?>
