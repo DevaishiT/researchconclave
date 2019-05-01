@@ -58,6 +58,7 @@
                     <th>Topic</th>
                     <th>Download</th>
                     <th>Grade</th>
+                    <th>Action</th>
                     <th style="display:none;">Report</th>
                     <th style="display:none;">Type</th>
                 </tr>
@@ -86,6 +87,7 @@
                 while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
                 ?>
                      <tr id="<?php echo $row['username']; ?>">
+                     <td><?php echo $row['count']; ?></td>
                         <td data-target="username"><?php echo $row['username']; ?></td>
                         <td data-target="topic"><?php echo $row['topic']; ?></td>
                         <td data-target="file"><a href="<?php echo $row['fileename']; ?>">Click here!</a></td>
@@ -105,7 +107,6 @@
             <!-- Modal content-->
             <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Review and Grade</h4>
             </div>
             <div class="modal-body">
