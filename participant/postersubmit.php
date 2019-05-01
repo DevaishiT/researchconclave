@@ -10,6 +10,13 @@
         die();
    }
 
+   $sql = "SELECT * from tableofcounts";
+   $result = mysqli_query($db,$sql);
+   $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+
+   $postercount = $row['postercount'];
+   $postercount = $postercount +1;
+
    if(isset($_POST["submit"])){
         $target_dir = "../uploads_poster/";
         $target_file = $target_dir . $login_session . "-" . basename($_FILES["fileToUpload"]["name"]);
@@ -50,9 +57,11 @@
         // if everything is ok, try to upload file
         } else {
             if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-                $sql = "INSERT into posterabstracts (username,email,topic,fileename,reviewer1,reviewer2) VALUES ('".$login_session."','".$email."','".$topic."','".$target_file."','Not Alloted','Not Alloted')";
+                $sql = "INSERT into posterabstracts (count,username,email,topic,fileename,reviewer1,reviewer2) VALUES ('POSTER".$postercount."','".$login_session."','".$email."','".$topic."','".$target_file."','Not Alloted','Not Alloted')";
                 $result = mysqli_query($db,$sql);
                 $message = "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
+                $sql = "UPDATE tableofcounts SET postercount = '".$postercount."'";
+                $result = mysqli_query($db,$sql);
             } else {
                 $message = "Sorry, there was an error uploading your file.";
             }

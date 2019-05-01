@@ -10,6 +10,13 @@
         die();
    }
 
+   $sql = "SELECT * from tableofcounts";
+   $result = mysqli_query($db,$sql);
+   $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+
+   $oralcount = $row['oralcount'];
+   $oralcount = $oralcount +1;
+
    if(isset($_POST["submit"])){
         $target_dir = "../uploads_oral/";
         $target_file = $target_dir . $login_session . "-" . basename($_FILES["fileToUpload"]["name"]);
@@ -50,9 +57,11 @@
         // if everything is ok, try to upload file
         } else {
             if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-                $sql = "INSERT into oralabstracts (username,email,topic,fileename) VALUES ('".$login_session."','".$email."','".$topic."','".$target_file."')";
+                $sql = "INSERT into oralabstracts (count,username,email,topic,fileename) VALUES ('ORAL".$oralcount."','".$login_session."','".$email."','".$topic."','".$target_file."')";
                 $result = mysqli_query($db,$sql);
                 $message = "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
+                $sql = "UPDATE tableofcounts SET oralcount = '".$oralcount."'";
+                $result = mysqli_query($db,$sql);
             } else {
                 $message = "Sorry, there was an error uploading your file.";
             }
